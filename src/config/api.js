@@ -1,5 +1,5 @@
-const rootUrl = 'http://127.0.0.1:8360/admin/';
-
+// const rootUrl = 'http://127.0.0.1:8360/admin/';
+const rootUrl = 'https://jiadian.xixi.fun/admin/';
 const api = {
     rootUrl : rootUrl,
     // express: {

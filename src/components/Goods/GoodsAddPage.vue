@@ -340,7 +340,6 @@
 
 <script>
 import api from "@/config/api";
-import lrz from "lrz";
 import moment from "moment";
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
@@ -348,6 +347,11 @@ import 'quill/dist/quill.bubble.css';
 import draggable from "vuedraggable";
 import $ from "jquery";
 import { quillEditor } from "vue-quill-editor";
+const lrz = function(file) {
+  return Promise.resolve({
+    file: file
+  });
+}
 const toolbarOptions = [
   ["bold", "italic", "underline", "strike"],
   ["blockquote"],

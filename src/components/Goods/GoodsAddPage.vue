@@ -38,6 +38,12 @@
               </el-option>
             </el-select>
           </el-form-item>
+          <el-form-item label="京东地址">
+            <el-input v-model="extraInfo.jdUrl"></el-input>
+          </el-form-item>
+          <el-form-item label="淘宝地址">
+            <el-input v-model="extraInfo.taobaoUrl"></el-input>
+          </el-form-item>
           <el-form-item
             label="商品图片"
             prop="list_pic_url"
@@ -420,6 +426,10 @@ export default {
         },
       },
       category: [],
+      extraInfo: {
+        jdUrl: null,
+        taobaoUrl: null
+      },
       infoForm: {
         name: "",
         list_pic_url: "",
@@ -486,6 +496,11 @@ export default {
     };
   },
   methods: {
+    initExtraInfo(goodId) {
+      this.axios.get("zhegnxuan_extra/good/extrainfo?goodId=" + goodId).then(data => {
+        this.extraInfo = data.data;
+      });
+    },
     handleSuccess() {},
     uploadIndexImg(request) {
       const file = request.file;
@@ -848,6 +863,11 @@ export default {
                 });
                 this.infoForm.id = response.data.data;
                 this.getGalleryList();
+                this.axios.post("zhegnxuan_extra/good/extrainfo", {
+                  ...this.extraInfo,
+                  goodId: this.infoForm.id,
+                  basicPrice: this.specData[0].retail_price
+                });
                 // this.$router.go(-1);
               } else {
                 this.$message({
@@ -907,6 +927,7 @@ export default {
       }
       //加载商品详情
       let that = this;
+      this.initExtraInfo(that.infoForm.id);
       this.axios
         .get("goods/info", {
           params: {
